@@ -1,5 +1,7 @@
 package com.speedy.ui.login;
 
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.content.res.Resources;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -8,11 +10,14 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.Spinner;
+
+import com.speedy.R;
+import com.speedy.app.PrefsKeys;
+import com.speedy.app.Utils;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
-import com.speedy.R;
-import com.speedy.app.Utils;
 
 /**
  * Created by Joshua King on 10/22/16.
@@ -43,11 +48,15 @@ public class OnboardingStep2Fragment extends Fragment {
 		final String[] distances      = resources.getStringArray(R.array.distances);
 		final String[] mediums        = resources.getStringArray(R.array.medium);
 		final String[] numberOfPeople = resources.getStringArray(R.array.number_of_people);
+		SharedPreferences sharedPreferences = getContext().getSharedPreferences("prefs", Context.MODE_PRIVATE);
+		final SharedPreferences.Editor editor = sharedPreferences.edit();
 
 		distancesSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
 			@Override
 			public void onItemSelected (AdapterView<?> parent, View view, int position, long id) {
 				Utils.snackbar(view, String.format("Distance: %s", distances[position]));
+				editor.putInt(PrefsKeys.KEY_DISTANCE, position);
+				editor.apply();
 			}
 
 			@Override
@@ -57,6 +66,8 @@ public class OnboardingStep2Fragment extends Fragment {
 			@Override
 			public void onItemSelected (AdapterView<?> parent, View view, int position, long id) {
 				Utils.snackbar(view, String.format("Medium: %s", mediums[position]));
+				editor.putInt(PrefsKeys.KEY_TYPE, position);
+				editor.apply();
 				if (getActivity() instanceof OnboardingActivity) {
 					((OnboardingActivity) getActivity()).fab.setImageResource(medium_icons[position]);
 				}
@@ -69,11 +80,14 @@ public class OnboardingStep2Fragment extends Fragment {
 			@Override
 			public void onItemSelected (AdapterView<?> parent, View view, int position, long id) {
 				Utils.snackbar(view, String.format("Number of People: %s", numberOfPeople[position]));
+				editor.putInt(PrefsKeys.KEY_MEMBERS, position);
+				editor.apply();
 			}
 
 			@Override
 			public void onNothingSelected (AdapterView<?> parent) { }
 		});
+
 
 		return view;
 	}

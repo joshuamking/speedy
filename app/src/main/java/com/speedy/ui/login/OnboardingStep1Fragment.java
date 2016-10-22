@@ -1,5 +1,7 @@
 package com.speedy.ui.login;
 
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -9,6 +11,7 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import com.speedy.R;
+import com.speedy.app.PrefsKeys;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -43,7 +46,13 @@ public class OnboardingStep1Fragment extends Fragment {
 
 	@OnClick(R.id.submit_button)
 	public void onSubmitButtonClick(View v){
-		model.savePlayer(personName.getText().toString());
+		String name = personName.getText().toString();
+		model.savePlayer(name);
+
+		SharedPreferences sharedPreferences = getContext().getSharedPreferences("prefs", Context.MODE_PRIVATE);
+		SharedPreferences.Editor editor = sharedPreferences.edit();
+		editor.putString(PrefsKeys.KEY_USERNAME, name);
+		editor.apply();
 	}
 
 	@Override

@@ -12,19 +12,19 @@ import com.speedy.api.value.Player;
 
 public class LobbyModel {
     private FirebaseDatabase database = FirebaseDatabase.getInstance();
-    public static boolean found = false;
+    private static boolean found = false;
 
-    public void searchForRoom(Player player, final GameOptions options, OnRoomUpdated updateListener){
-        DatabaseReference ref = database.getReference("lobby");
-
+    public void searchForGame(final Player player, final String playerId, final GameOptions options, OnRoomUpdated updateListener){
+        final DatabaseReference ref = database.getReference("lobby");
 
         ref.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 for (DataSnapshot postSnapshot: dataSnapshot.getChildren()) {
                     Lobby lobby = postSnapshot.getValue(Lobby.class);
+                    long players = postSnapshot.child("players").getChildrenCount();
 
-                    if(lobby.getPlayers().size() == lobby.getRaceMembers() ||
+                    if(players == lobby.getRaceMembers() ||
                             lobby.getRaceMembers() != options.getRaceMembers() ||
                             lobby.getRaceDistance() != options.getRaceDistance() ||
                             lobby.getRaceType() != options.getRaceType()){
@@ -32,6 +32,7 @@ public class LobbyModel {
                     }
 
                     found = true;
+                    postSnapshot.child("players/" + (players - 1)).getRef().setValue(playerId);
                 }
             }
 

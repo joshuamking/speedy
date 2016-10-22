@@ -1,5 +1,6 @@
 package com.speedy.ui.login;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
@@ -9,10 +10,13 @@ import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
-import butterknife.BindView;
-import butterknife.ButterKnife;
+
 import com.speedy.R;
 import com.speedy.app.Utils;
+import com.speedy.ui.lobby.LobbyActivity;
+
+import butterknife.BindView;
+import butterknife.ButterKnife;
 
 public class OnboardingActivity extends AppCompatActivity {
 	@BindView (R.id.fab)                   FloatingActionButton fab;
@@ -91,6 +95,7 @@ public class OnboardingActivity extends AppCompatActivity {
 			@Override
 			public void onClick (View view) {
 				Utils.snackbar(view, "This is where we will start the race...");
+				startActivity(new Intent(OnboardingActivity.this, LobbyActivity.class));
 			}
 		});
 	}
