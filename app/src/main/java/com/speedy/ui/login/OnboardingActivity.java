@@ -96,7 +96,7 @@ public class OnboardingActivity extends AppCompatActivity {
 		setSupportActionBar(toolbar);
 		mSectionsPagerAdapter = new SectionsPagerAdapter(getSupportFragmentManager());
 
-		mViewPager = (ViewPager) findViewById(R.id.container);
+		mViewPager = (ViewPager) findViewById(R.id.onboarding_view_pager);
 		mViewPager.setAdapter(mSectionsPagerAdapter);
 
 		FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
