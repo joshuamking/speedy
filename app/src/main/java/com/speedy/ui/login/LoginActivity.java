@@ -2,12 +2,9 @@ package com.speedy.ui.login;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.widget.Button;
-import butterknife.BindView;
-import com.speedy.R;
 
 public class LoginActivity extends AppCompatActivity {
-	@BindView (R.id.button) Button button;
+	//	@BindView (R.id.button) Button button;
 
 	@Override
 	protected void onCreate (Bundle savedInstanceState) {

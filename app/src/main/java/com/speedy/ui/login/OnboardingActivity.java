@@ -9,48 +9,12 @@ import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import com.speedy.R;
 
 public class OnboardingActivity extends AppCompatActivity {
 	private SectionsPagerAdapter mSectionsPagerAdapter;
 	private ViewPager            mViewPager;
-
-	public static class OnboardingStep1Fragment extends Fragment {
-		public OnboardingStep1Fragment () {
-		}
-
-		public static OnboardingStep1Fragment newInstance () {
-			OnboardingStep1Fragment fragment = new OnboardingStep1Fragment();
-			Bundle                  args     = new Bundle();
-			fragment.setArguments(args);
-			return fragment;
-		}
-
-		@Override
-		public View onCreateView (LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-			return inflater.inflate(R.layout.fragment_onboarding_step_1, container, false);
-		}
-	}
-
-	public static class OnboardingStep2Fragment extends Fragment {
-		public OnboardingStep2Fragment () {
-		}
-
-		public static OnboardingStep2Fragment newInstance () {
-			OnboardingStep2Fragment fragment = new OnboardingStep2Fragment();
-			Bundle                  args     = new Bundle();
-			fragment.setArguments(args);
-			return fragment;
-		}
-
-		@Override
-		public View onCreateView (LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-			return inflater.inflate(R.layout.fragment_onboarding_step_2, container, false);
-		}
-	}
 
 	public class SectionsPagerAdapter extends FragmentPagerAdapter {
 		public SectionsPagerAdapter (FragmentManager fm) {
