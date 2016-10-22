@@ -1,5 +1,7 @@
 package com.speedy.ui.login;
 
+
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
@@ -13,7 +15,7 @@ import android.view.View;
 
 import com.speedy.R;
 import com.speedy.app.Utils;
-import com.speedy.ui.lobby.LobbyActivity;
+import com.speedy.ui.race.RaceActivity;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -47,16 +49,7 @@ public class OnboardingActivity extends AppCompatActivity {
 		}
 
 		@Override
-		public CharSequence getPageTitle (int position) {
-			switch (position) {
-				case 0:
-					return "Page 1";
-				case 1:
-					return "Page 2";
-				default:
-					return null;
-			}
-		}
+		public CharSequence getPageTitle (int position) { return ""; }
 	}
 
 	@Override
@@ -88,14 +81,22 @@ public class OnboardingActivity extends AppCompatActivity {
 
 			@Override
 			public void onPageScrollStateChanged (int state) {
+				if (state == ViewPager.SCROLL_STATE_DRAGGING) { Utils.hideKeyboard(viewPager, getApplicationContext()); }
 			}
 		});
 
 		fab.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick (View view) {
-				Utils.snackbar(view, "This is where we will start the race...");
-				startActivity(new Intent(OnboardingActivity.this, LobbyActivity.class));
+				final ProgressDialog progressDialog = ProgressDialog.show(OnboardingActivity.this, null, "Finding other racers...", true);
+				Utils.delayRunnableOnUI(2000, new Runnable() {
+					@Override
+					public void run () {
+						progressDialog.dismiss();
+						//						NotificationController.notifyProgress(getApplicationContext());
+						startActivity(new Intent(getApplicationContext(), RaceActivity.class));
+					}
+				});
 			}
 		});
 	}
