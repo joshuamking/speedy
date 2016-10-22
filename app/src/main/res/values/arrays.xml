@@ -13,9 +13,9 @@
         <item>Biking</item>
         <item>Skateboard</item>
     </string-array>
-    <integer-array name="number_of_people">
+    <string-array name="number_of_people">
         <item>2</item>
         <item>3</item>
         <item>4</item>
-    </integer-array>
+    </string-array>
 </resources>
