@@ -9,14 +9,13 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
-
-import com.speedy.R;
-import com.speedy.app.PrefsKeys;
-
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import butterknife.Unbinder;
+import com.speedy.R;
+import com.speedy.app.PrefsKeys;
+import com.speedy.app.Utils;
 
 /**
  * Created by Joshua King on 10/22/16.
@@ -24,8 +23,9 @@ import butterknife.Unbinder;
 public class OnboardingStep1Fragment extends Fragment {
 	@BindView (R.id.person_name)   TextView personName;
 	@BindView (R.id.submit_button) Button   submitButton;
-	private                        Unbinder unbinder;
+	private                        View     mainView;
 	private OnboardingModel model = new OnboardingModel();
+	private Unbinder unbinder;
 
 	public OnboardingStep1Fragment () {
 	}
@@ -39,9 +39,15 @@ public class OnboardingStep1Fragment extends Fragment {
 
 	@Override
 	public View onCreateView (LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-		View view = inflater.inflate(R.layout.fragment_onboarding_step_1, container, false);
-		unbinder = ButterKnife.bind(this, view);
-		return view;
+		mainView = inflater.inflate(R.layout.fragment_onboarding_step_1, container, false);
+		unbinder = ButterKnife.bind(this, mainView);
+		return mainView;
+	}
+
+	@Override
+	public void onDestroyView () {
+		super.onDestroyView();
+		unbinder.unbind();
 	}
 
 	@OnClick(R.id.submit_button)
@@ -54,12 +60,8 @@ public class OnboardingStep1Fragment extends Fragment {
 		editor.putString(PrefsKeys.KEY_USERNAME, name);
 		editor.apply();
 
-		((OnboardingActivity) getActivity()).nextPage();
-	}
+		Utils.hideKeyboard(mainView, getContext());
 
-	@Override
-	public void onDestroyView () {
-		super.onDestroyView();
-		unbinder.unbind();
+		((OnboardingActivity) getActivity()).nextPage();
 	}
 }
