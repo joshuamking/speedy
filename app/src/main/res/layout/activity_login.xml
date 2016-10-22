@@ -17,9 +17,10 @@
             android:layout_width="match_parent">
 
         <EditText
-                android:id="@+id/user_name"
+                android:id="@+id/person_name"
                 android:layout_height="wrap_content"
                 android:layout_width="match_parent"
-                android:hint="username" />
+                android:hint="Name" />
     </android.support.design.widget.TextInputLayout>
+
 </LinearLayout>
