@@ -63,6 +63,7 @@ public class OnboardingActivity extends AppCompatActivity {
 		pagerAdapter = new SectionsPagerAdapter(getSupportFragmentManager());
 		viewPager.setAdapter(pagerAdapter);
 
+
 		viewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
 			@Override
 			public void onPageScrolled (int position, float positionOffset, int positionOffsetPixels) {
@@ -99,5 +100,9 @@ public class OnboardingActivity extends AppCompatActivity {
 				});
 			}
 		});
+	}
+
+	public void nextPage(){
+		viewPager.setCurrentItem(1, true);
 	}
 }

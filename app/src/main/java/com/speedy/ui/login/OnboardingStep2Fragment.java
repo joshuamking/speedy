@@ -88,7 +88,6 @@ public class OnboardingStep2Fragment extends Fragment {
 			public void onNothingSelected (AdapterView<?> parent) { }
 		});
 
-
 		return view;
 	}
 

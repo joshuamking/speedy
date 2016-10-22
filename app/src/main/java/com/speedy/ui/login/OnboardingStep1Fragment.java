@@ -53,6 +53,8 @@ public class OnboardingStep1Fragment extends Fragment {
 		SharedPreferences.Editor editor = sharedPreferences.edit();
 		editor.putString(PrefsKeys.KEY_USERNAME, name);
 		editor.apply();
+
+		((OnboardingActivity) getActivity()).nextPage();
 	}
 
 	@Override
