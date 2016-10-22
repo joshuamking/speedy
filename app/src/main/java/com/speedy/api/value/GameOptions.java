@@ -1,21 +1,15 @@
 package com.speedy.api.value;
 
-import java.util.List;
 
-public class Room {
+public class GameOptions {
     private int raceType;
     private int raceDistance;
     private int raceMembers;
-    private List<Integer> players;
 
-    public Room() {
-    }
-
-    public Room(int raceType, int raceDistance, int raceMembers, List<Integer> players) {
+    public GameOptions(int raceType, int raceDistance, int raceMembers) {
         this.raceType = raceType;
         this.raceDistance = raceDistance;
         this.raceMembers = raceMembers;
-        this.players = players;
     }
 
     public int getRaceType() {
@@ -28,9 +22,5 @@ public class Room {
 
     public int getRaceMembers() {
         return raceMembers;
-    }
-
-    public List<Integer> getPlayers() {
-        return players;
     }
 }
