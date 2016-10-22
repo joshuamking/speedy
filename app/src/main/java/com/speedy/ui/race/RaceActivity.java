@@ -11,8 +11,7 @@ import android.support.v4.content.ContextCompat;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.ProgressBar;
-import butterknife.BindView;
-import butterknife.ButterKnife;
+
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
@@ -23,12 +22,16 @@ import com.speedy.R;
 import com.speedy.app.NotificationController;
 import com.speedy.app.Utils;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
+
 public class RaceActivity extends FragmentActivity implements OnMapReadyCallback, LocationListener {
 	private static final int MY_LOCATION_REQUEST_CODE = 23553;
 	GoogleMap mMap;
 	@BindView (R.id.searching_for_me_progress_bar) ProgressBar     searchingForMe;
 	private                                        Location        location;
 	private                                        LocationManager locationManager;
+	private LocationRaceModel model = new LocationRaceModel();
 
 	@Override
 	protected void onCreate (Bundle savedInstanceState) {
@@ -42,6 +45,8 @@ public class RaceActivity extends FragmentActivity implements OnMapReadyCallback
 		setContentView(R.layout.activity_race);
 
 		ButterKnife.bind(this);
+
+		locationManager = (LocationManager) getSystemService(LOCATION_SERVICE);
 
 		SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map);
 		mapFragment.getMapAsync(this);
@@ -74,7 +79,7 @@ public class RaceActivity extends FragmentActivity implements OnMapReadyCallback
 	@Override
 	public void onLocationChanged (Location location) {
 		if (location == null) { return; }
-
+//
 		this.location = location;
 
 		mMap.getUiSettings().setMyLocationButtonEnabled(false);
@@ -87,6 +92,7 @@ public class RaceActivity extends FragmentActivity implements OnMapReadyCallback
 																			   .build()));
 		searchingForMe.setVisibility(View.GONE);
 		NotificationController.notifyProgress(getApplicationContext(), (int) (Math.random() * 100));
+		model.updateLocation(location, 0);
 	}
 
 	@Override
@@ -114,7 +120,6 @@ public class RaceActivity extends FragmentActivity implements OnMapReadyCallback
 	@SuppressWarnings ("MissingPermission")
 	private void requestUpdates () {
 		mMap.setMyLocationEnabled(true);
-		locationManager = (LocationManager) getSystemService(LOCATION_SERVICE);
 		locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 500, 1000, this);
 	}
 }

@@ -11,7 +11,6 @@ import android.widget.Button;
 
 import com.speedy.R;
 import com.speedy.api.value.GameOptions;
-import com.speedy.api.value.Lobby;
 import com.speedy.api.value.Player;
 import com.speedy.app.PrefsKeys;
 
@@ -45,22 +44,5 @@ public class LobbyActivity extends AppCompatActivity {
 
         Player player = new Player(username);
         GameOptions options = new GameOptions(medium, distance, numberOfPlayers);
-
-        model.searchForGame(player, options, new LobbyModel.OnRoomUpdated() {
-            @Override
-            public void onAddPlayer(String name) {
-
-            }
-
-            @Override
-            public void onSearchComplete(Lobby lobby) {
-
-            }
-
-            @Override
-            public void onFindRoom() {
-
-            }
-        });
     }
 }
