@@ -12,16 +12,17 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
 import com.speedy.R;
-import com.speedy.ui.UiUtils;
+import com.speedy.app.Utils;
 
 /**
  * Created by Joshua King on 10/22/16.
  */
 public class OnboardingStep2Fragment extends Fragment {
-	@BindView (R.id.distances_spinner)        Spinner  distancesSpinner;
-	@BindView (R.id.medium_spinner)           Spinner  mediumSpinner;
-	@BindView (R.id.number_of_people_spinner) Spinner  numberOfPeopleSpinner;
-	private                                   Unbinder unbinder;
+	@BindView (R.id.distances_spinner)        Spinner distancesSpinner;
+	@BindView (R.id.medium_spinner)           Spinner mediumSpinner;
+	@BindView (R.id.number_of_people_spinner) Spinner numberOfPeopleSpinner;
+	private int[] medium_icons = { R.drawable.ic_walking, R.drawable.ic_running, R.drawable.ic_biking, R.drawable.ic_skateboard };
+	private Unbinder unbinder;
 
 	public OnboardingStep2Fragment () {
 	}
@@ -46,7 +47,7 @@ public class OnboardingStep2Fragment extends Fragment {
 		distancesSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
 			@Override
 			public void onItemSelected (AdapterView<?> parent, View view, int position, long id) {
-				UiUtils.snackbar(view, String.format("Distance: %s", distances[position]));
+				Utils.snackbar(view, String.format("Distance: %s", distances[position]));
 			}
 
 			@Override
@@ -55,7 +56,10 @@ public class OnboardingStep2Fragment extends Fragment {
 		mediumSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
 			@Override
 			public void onItemSelected (AdapterView<?> parent, View view, int position, long id) {
-				UiUtils.snackbar(view, String.format("Medium: %s", mediums[position]));
+				Utils.snackbar(view, String.format("Medium: %s", mediums[position]));
+				if (getActivity() instanceof OnboardingActivity) {
+					((OnboardingActivity) getActivity()).fab.setImageResource(medium_icons[position]);
+				}
 			}
 
 			@Override
@@ -64,7 +68,7 @@ public class OnboardingStep2Fragment extends Fragment {
 		numberOfPeopleSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
 			@Override
 			public void onItemSelected (AdapterView<?> parent, View view, int position, long id) {
-				UiUtils.snackbar(view, String.format("Number of People: %s", numberOfPeople[position]));
+				Utils.snackbar(view, String.format("Number of People: %s", numberOfPeople[position]));
 			}
 
 			@Override

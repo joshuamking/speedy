@@ -12,7 +12,7 @@ import android.view.View;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import com.speedy.R;
-import com.speedy.ui.UiUtils;
+import com.speedy.app.Utils;
 
 public class OnboardingActivity extends AppCompatActivity {
 	@BindView (R.id.fab)                   FloatingActionButton fab;
@@ -90,7 +90,7 @@ public class OnboardingActivity extends AppCompatActivity {
 		fab.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick (View view) {
-				UiUtils.snackbar(view, "This is where we will start the race...");
+				Utils.snackbar(view, "This is where we will start the race...");
 			}
 		});
 	}

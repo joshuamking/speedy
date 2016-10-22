@@ -9,6 +9,7 @@ import android.widget.Button;
 import android.widget.TextView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.Unbinder;
 import com.speedy.R;
 
 /**
@@ -17,6 +18,7 @@ import com.speedy.R;
 public class OnboardingStep1Fragment extends Fragment {
 	@BindView (R.id.person_name)   TextView personName;
 	@BindView (R.id.submit_button) Button   submitButton;
+	private                        Unbinder unbinder;
 
 	public OnboardingStep1Fragment () {
 	}
@@ -31,7 +33,13 @@ public class OnboardingStep1Fragment extends Fragment {
 	@Override
 	public View onCreateView (LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 		View view = inflater.inflate(R.layout.fragment_onboarding_step_1, container, false);
-		ButterKnife.bind(view);
+		unbinder = ButterKnife.bind(this, view);
 		return view;
+	}
+
+	@Override
+	public void onDestroyView () {
+		super.onDestroyView();
+		unbinder.unbind();
 	}
 }
