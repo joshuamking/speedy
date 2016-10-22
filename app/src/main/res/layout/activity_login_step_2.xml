@@ -7,5 +7,15 @@
     <Spinner
             android:layout_height="wrap_content"
             android:layout_width="match_parent"
-            android:entries="@array/" />
+            android:entries="@array/distances" />
+
+    <Spinner
+            android:layout_height="wrap_content"
+            android:layout_width="match_parent"
+            android:entries="@array/medium" />
+
+    <Spinner
+            android:layout_height="wrap_content"
+            android:layout_width="match_parent"
+            android:entries="@array/number_of_people" />
 </LinearLayout>
