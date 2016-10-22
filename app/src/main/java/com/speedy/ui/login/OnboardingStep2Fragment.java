@@ -10,18 +10,13 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.Spinner;
-
+import butterknife.BindView;
+import butterknife.ButterKnife;
+import butterknife.Unbinder;
 import com.speedy.R;
 import com.speedy.app.PrefsKeys;
 import com.speedy.app.Utils;
 
-import butterknife.BindView;
-import butterknife.ButterKnife;
-import butterknife.Unbinder;
-
-/**
- * Created by Joshua King on 10/22/16.
- */
 public class OnboardingStep2Fragment extends Fragment {
 	@BindView (R.id.distances_spinner)        Spinner distancesSpinner;
 	@BindView (R.id.medium_spinner)           Spinner mediumSpinner;
@@ -44,12 +39,12 @@ public class OnboardingStep2Fragment extends Fragment {
 		View view = inflater.inflate(R.layout.fragment_onboarding_step_2, container, false);
 		unbinder = ButterKnife.bind(this, view);
 
-		Resources      resources      = getContext().getResources();
-		final String[] distances      = resources.getStringArray(R.array.distances);
-		final String[] mediums        = resources.getStringArray(R.array.medium);
-		final String[] numberOfPeople = resources.getStringArray(R.array.number_of_people);
-		SharedPreferences sharedPreferences = getContext().getSharedPreferences("prefs", Context.MODE_PRIVATE);
-		final SharedPreferences.Editor editor = sharedPreferences.edit();
+		Resources                      resources         = getContext().getResources();
+		final String[]                 distances         = resources.getStringArray(R.array.distances);
+		final String[]                 mediums           = resources.getStringArray(R.array.medium);
+		final String[]                 numberOfPeople    = resources.getStringArray(R.array.number_of_people);
+		SharedPreferences              sharedPreferences = getContext().getSharedPreferences("prefs", Context.MODE_PRIVATE);
+		final SharedPreferences.Editor editor            = sharedPreferences.edit();
 
 		distancesSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
 			@Override
