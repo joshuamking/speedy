@@ -58,7 +58,7 @@ public class RaceActivity extends FragmentActivity implements OnMapReadyCallback
 
 		ButterKnife.bind(this);
 		toolbar.setTitle("Progress");
-		toolbar.setTitleTextColor();
+		toolbar.setTitleTextColor(getColor(R.color.white));
 		locationManager = (LocationManager) getSystemService(LOCATION_SERVICE);
 
 		SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map);
