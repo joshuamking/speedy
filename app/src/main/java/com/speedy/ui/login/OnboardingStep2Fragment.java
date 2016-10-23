@@ -10,12 +10,14 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.Spinner;
-import butterknife.BindView;
-import butterknife.ButterKnife;
-import butterknife.Unbinder;
+
 import com.speedy.R;
 import com.speedy.app.PrefsKeys;
 import com.speedy.app.Utils;
+
+import butterknife.BindView;
+import butterknife.ButterKnife;
+import butterknife.Unbinder;
 
 public class OnboardingStep2Fragment extends Fragment {
 	@BindView (R.id.distances_spinner)        Spinner distancesSpinner;
@@ -78,6 +80,7 @@ public class OnboardingStep2Fragment extends Fragment {
 				editor.putInt(PrefsKeys.KEY_MEMBERS, position);
 				editor.apply();
 			}
+
 
 			@Override
 			public void onNothingSelected (AdapterView<?> parent) { }
