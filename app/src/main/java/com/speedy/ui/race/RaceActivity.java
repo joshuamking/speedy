@@ -12,7 +12,8 @@ import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.ProgressBar;
-
+import butterknife.BindView;
+import butterknife.ButterKnife;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
@@ -28,19 +29,20 @@ import com.speedy.api.value.RaceCoordinates;
 import com.speedy.app.NotificationController;
 import com.speedy.app.Utils;
 
-import butterknife.BindView;
-import butterknife.ButterKnife;
-
-public class RaceActivity extends FragmentActivity implements OnMapReadyCallback, LocationListener{
-	private static final int MY_LOCATION_REQUEST_CODE = 23553;
+public class RaceActivity extends FragmentActivity implements OnMapReadyCallback, LocationListener {
+	private static final int     MY_LOCATION_REQUEST_CODE = 23553;
+	private static       boolean isFirst                  = true; // for calulating distance method
+	private static RaceCoordinates last; // for calulating distance method
 	GoogleMap mMap;
 	@BindView (R.id.searching_for_me_progress_bar) ProgressBar     searchingForMe;
-	@BindView(R.id.toolbar) Toolbar toolbar;
+	@BindView (R.id.toolbar)                       Toolbar         toolbar;
 	private                                        Location        location;
 	private                                        LocationManager locationManager;
 	private LocationRaceModel model = new LocationRaceModel();
-	private static boolean isFirst = true; // for calulating distance method
-	private static RaceCoordinates last; // for calulating distance method
+
+	private interface OnDistanceCalculated {
+		void onDistanceCalculated (int distance);
+	}
 
 	@Override
 	protected void onCreate (Bundle savedInstanceState) {
@@ -53,8 +55,7 @@ public class RaceActivity extends FragmentActivity implements OnMapReadyCallback
 
 		setContentView(R.layout.activity_race);
 
-		getWindow().setSoftInputMode(
-				WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE);
+		getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE);
 
 		ButterKnife.bind(this);
 		toolbar.setTitle("Progress");
@@ -92,7 +93,7 @@ public class RaceActivity extends FragmentActivity implements OnMapReadyCallback
 	@Override
 	public void onLocationChanged (Location location) {
 		if (location == null) { return; }
-//
+
 		this.location = location;
 
 		mMap.getUiSettings().setMyLocationButtonEnabled(false);
@@ -108,41 +109,11 @@ public class RaceActivity extends FragmentActivity implements OnMapReadyCallback
 		model.updateLocation(location, 0);
 		calculateDistance(new OnDistanceCalculated() {
 			@Override
-			public void onDistanceCalculated(int distance) {
-				if(distance > 10){
+			public void onDistanceCalculated (int distance) {
+				if (distance > 10) {
 
 				}
-//				distanceTraveled.setText(distance + "km");
-			}
-		});
-	}
-
-	public void calculateDistance(final OnDistanceCalculated onDistanceCalculated){
-		FirebaseDatabase.getInstance().getReference("/games/0/positions/0/position_history").addValueEventListener(new ValueEventListener() {
-			@Override
-			public void onDataChange(DataSnapshot dataSnapshot) {
-				int distance = 0;
-				for (DataSnapshot postSnapshot: dataSnapshot.getChildren()) {
-					RaceCoordinates coordinates = postSnapshot.getValue(RaceCoordinates.class);
-
-					if(isFirst){
-						isFirst = false;
-						last = coordinates;
-						continue;
-					}
-
-					double tx = ((coordinates.getLatitude()-last.getLatitude())*2*6378*Math.PI/360);
-					double ty = ((coordinates.getLongitude()-last.getLongitude())*2*6378*Math.PI/360);
-					distance += Math.sqrt(tx*tx+ty*ty);
-					last = coordinates;
-				}
-
-				onDistanceCalculated.onDistanceCalculated(distance);
-			}
-
-			@Override
-			public void onCancelled(DatabaseError databaseError) {
-
+				//				distanceTraveled.setText(distance + "km");
 			}
 		});
 	}
@@ -167,15 +138,45 @@ public class RaceActivity extends FragmentActivity implements OnMapReadyCallback
 		super.onResume();
 
 		onLocationChanged(location);
+		requestUpdates();
+	}
+
+	public void calculateDistance (final OnDistanceCalculated onDistanceCalculated) {
+		FirebaseDatabase.getInstance().getReference("/games/0/positions/0/position_history").addValueEventListener(new ValueEventListener() {
+			@Override
+			public void onDataChange (DataSnapshot dataSnapshot) {
+				int distance = 0;
+				for (DataSnapshot postSnapshot : dataSnapshot.getChildren()) {
+					RaceCoordinates coordinates = postSnapshot.getValue(RaceCoordinates.class);
+
+					if (isFirst) {
+						isFirst = false;
+						last = coordinates;
+						continue;
+					}
+
+					double tx = ((coordinates.getLatitude() - last.getLatitude()) * 2 * 6378 * Math.PI / 360);
+					double ty = ((coordinates.getLongitude() - last.getLongitude()) * 2 * 6378 * Math.PI / 360);
+					distance += Math.sqrt(tx * tx + ty * ty);
+					last = coordinates;
+				}
+
+				onDistanceCalculated.onDistanceCalculated(distance);
+			}
+
+			@Override
+			public void onCancelled (DatabaseError databaseError) {
+
+			}
+		});
 	}
 
 	@SuppressWarnings ("MissingPermission")
 	private void requestUpdates () {
-		mMap.setMyLocationEnabled(true);
-		locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 1000, 100, this);
-	}
-
-	private interface OnDistanceCalculated{
-		void onDistanceCalculated(int distance);
+		try {
+			mMap.setMyLocationEnabled(true);
+			locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 1000, 500, this);
+		} catch (Exception ignored) {
+		}
 	}
 }

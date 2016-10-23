@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:layout_height="match_parent"
+              android:layout_width="match_parent"
+              android:orientation="vertical">
+
+    <TextView
+            android:layout_height="wrap_content"
+            android:layout_width="match_parent"
+            android:layout_gravity="center_horizontal"
+            android:background="@color/colorPrimary"
+            android:gravity="center_horizontal|bottom"
+            android:paddingBottom="20dp"
+            android:paddingTop="30dp"
+            android:text="What medium?"
+            android:textStyle="bold" />
+
+    <android.support.wearable.view.WearableListView
+            android:id="@+id/list_view"
+            android:layout_height="match_parent"
+            android:layout_width="match_parent"
+            />
+</LinearLayout>
