@@ -4,6 +4,9 @@ public class RaceCoordinates {
     private double latitude;
     private double longitude;
 
+    public RaceCoordinates() {
+    }
+
     public RaceCoordinates(double latitude, double longitude) {
         this.latitude = latitude;
         this.longitude = longitude;

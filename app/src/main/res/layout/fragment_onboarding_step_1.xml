@@ -68,11 +68,13 @@
                     android:orientation="vertical">
 
                 <TextView
+                        android:textStyle="bold"
                         android:layout_height="wrap_content"
                         android:layout_width="wrap_content"
                         android:layout_marginLeft="4dp"
                         android:text="Login"
-                        android:textColor="#ff5252" />
+                        android:textColor="#ff5252"
+                    android:id="@+id/textView" />
 
                 <android.support.design.widget.TextInputLayout
                         android:layout_height="wrap_content"
@@ -81,6 +83,8 @@
 
                     <EditText
                             android:id="@+id/person_name"
+                            android:maxLines="1"
+                            android:lines="1"
                             android:layout_height="wrap_content"
                             android:layout_width="match_parent"
                             android:hint="Name"

@@ -1,6 +1,6 @@
 package com.speedy.api.value;
 
-public class Lobby {
+public class Lobby{
     private int raceType;
     private int raceDistance;
     private int raceMembers;
