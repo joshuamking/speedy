@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string-array name="distances">
-        <item>1km</item>
-        <item>2km</item>
-        <item>3km</item>
-        <item>5km</item>
-        <item>10km</item>
+        <item>1.00 km</item>
+        <item>2.00 km</item>
+        <item>3.00 km</item>
+        <item>5.00 km</item>
+        <item>10.00 km</item>
     </string-array>
     <string-array name="medium">
         <item>Walking</item>
@@ -14,8 +14,8 @@
         <item>Skateboard</item>
     </string-array>
     <string-array name="number_of_people">
-        <item>2</item>
-        <item>3</item>
-        <item>4</item>
+        <item>2 players</item>
+        <item>3 players</item>
+        <item>4 players</item>
     </string-array>
 </resources>
