@@ -5,4 +5,7 @@
     <string name="title_activity_onboarding_step2">OnboardingStep2Activity</string>
     <string name="hello_square">Hello Square World!</string>
     <string name="title_activity_onboarding_step3">OnboardingStep3Activity</string>
+    <string name="title_activity_onboarding_setp4">OnboardingSetp4Activity</string>
+    <string name="title_activity_in_race">InRaceActivity</string>
+    <string name="hello_world">Hello World!</string>
 </resources>

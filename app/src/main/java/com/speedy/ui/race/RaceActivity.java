@@ -26,7 +26,6 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.speedy.R;
 import com.speedy.api.value.RaceCoordinates;
-import com.speedy.app.NotificationController;
 import com.speedy.app.Utils;
 
 public class RaceActivity extends FragmentActivity implements OnMapReadyCallback, LocationListener {
@@ -105,11 +104,12 @@ public class RaceActivity extends FragmentActivity implements OnMapReadyCallback
 																			   .bearing(location.getBearing())
 																			   .build()));
 		searchingForMe.setVisibility(View.GONE);
-		NotificationController.notifyProgress(getApplicationContext(), (int) (Math.random() * 100));
+		//		NotificationController.notifyProgress(getApplicationContext(), (int) (Math.random() * 100));
 		model.updateLocation(location, 0);
 		calculateDistance(new OnDistanceCalculated() {
 			@Override
 			public void onDistanceCalculated (int distance) {
+
 				if (distance > 10) {
 
 				}

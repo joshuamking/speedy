@@ -12,17 +12,17 @@ import android.widget.TextView;
 import java.util.HashMap;
 import java.util.Map;
 
-public class OnboardingStep3Activity extends Activity {
+public class OnboardingStep4Activity extends Activity {
 	private Map<RecyclerView.ViewHolder, Integer> holderToPositionMap = new HashMap<>();
 
 	@Override
 	protected void onCreate (Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.activity_onboarding_step3);
+		setContentView(R.layout.activity_onboarding_step4);
 
 		WearableListView listView = (WearableListView) findViewById(R.id.list_view);
 
-		final String[] mediums = getResources().getStringArray(R.array.medium);
+		final String[] members = getResources().getStringArray(R.array.number_of_people);
 
 		listView.setAdapter(new RecyclerView.Adapter() {
 			@Override
@@ -33,12 +33,12 @@ public class OnboardingStep3Activity extends Activity {
 			@Override
 			public void onBindViewHolder (RecyclerView.ViewHolder holder, int position) {
 				holderToPositionMap.put(holder, position);
-				((TextView) holder.itemView).setText(mediums[position]);
+				((TextView) holder.itemView).setText(members[position]);
 			}
 
 			@Override
 			public int getItemCount () {
-				return mediums.length;
+				return members.length;
 			}
 		});
 
@@ -47,9 +47,9 @@ public class OnboardingStep3Activity extends Activity {
 			@Override
 			public void onClick (WearableListView.ViewHolder viewHolder) {
 				try {
-					DataStore.setMedium(holderToPositionMap.get(viewHolder));
+					DataStore.setMembers(holderToPositionMap.get(viewHolder));
 				} catch (Exception ignored) { }
-				startActivity(new Intent(OnboardingStep3Activity.this, OnboardingStep4Activity.class));
+				startActivity(new Intent(OnboardingStep4Activity.this, InRaceActivity.class));
 			}
 
 			@Override

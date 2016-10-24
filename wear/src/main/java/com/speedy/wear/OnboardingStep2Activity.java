@@ -9,17 +9,21 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import java.util.HashMap;
+import java.util.Map;
+
 public class OnboardingStep2Activity extends Activity {
+	private Map<RecyclerView.ViewHolder, Integer> holderToPositionMap = new HashMap<>();
+
 	@Override
 	protected void onCreate (Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_onboarding_step2);
 
-		WearableListView listView = (WearableListView) findViewById(R.id.list_view);
+		final WearableListView listView = (WearableListView) findViewById(R.id.list_view);
 
 		final String[] distances = getResources().getStringArray(R.array.distances);
 
-		//		listView.setLayoutManager(new WearableListView.(this, LinearLayoutManager.VERTICAL, false));
 		listView.setAdapter(new RecyclerView.Adapter() {
 			@Override
 			public RecyclerView.ViewHolder onCreateViewHolder (ViewGroup parent, int viewType) {
@@ -28,6 +32,7 @@ public class OnboardingStep2Activity extends Activity {
 
 			@Override
 			public void onBindViewHolder (RecyclerView.ViewHolder holder, int position) {
+				holderToPositionMap.put(holder, position);
 				((TextView) holder.itemView).setText(distances[position]);
 			}
 
@@ -37,10 +42,12 @@ public class OnboardingStep2Activity extends Activity {
 			}
 		});
 
-		// Set a click listener
 		listView.setClickListener(new WearableListView.ClickListener() {
 			@Override
 			public void onClick (WearableListView.ViewHolder viewHolder) {
+				try {
+					DataStore.setDistance(holderToPositionMap.get(viewHolder));
+				} catch (Exception ignored) { }
 				startActivity(new Intent(OnboardingStep2Activity.this, OnboardingStep3Activity.class));
 			}
 

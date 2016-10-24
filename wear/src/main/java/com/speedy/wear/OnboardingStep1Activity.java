@@ -3,6 +3,7 @@ package com.speedy.wear;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.Editable;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -20,7 +21,9 @@ public class OnboardingStep1Activity extends Activity {
 		submitButton.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick (View view) {
-				if (nameEditText.getText() != null && nameEditText.getText().length() > 0) {
+				Editable name = nameEditText.getText();
+				if (name != null && name.length() > 0) {
+					DataStore.setName(name.toString());
 					startActivity(new Intent(OnboardingStep1Activity.this, OnboardingStep2Activity.class));
 				}
 				else { Toast.makeText(getApplicationContext(), "Please provide a name", Toast.LENGTH_SHORT).show(); }

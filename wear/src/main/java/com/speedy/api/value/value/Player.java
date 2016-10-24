@@ -1,4 +1,4 @@
-package com.speedy.api.value;
+package com.speedy.api.value.value;
 
 import me.denley.courier.Deliverable;
 
